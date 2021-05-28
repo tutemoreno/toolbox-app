@@ -3,11 +3,7 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 
 export default function MessageList(props) {
   return (
-    <div
-      style={{
-        padding: "40px",
-      }}
-    >
+    <div style={{ padding: "40px" }}>
       <Container style={containerStyle}>
         <Row>
           <Col style={{ fontSize: "30px" }}>Results:</Col>
@@ -28,8 +24,6 @@ export default function MessageList(props) {
                   <Form.Check checked={json.isPalidrome} />
                 </Col>
               </Row>
-
-              //
             ))}
           </Col>
         </Row>
@@ -40,7 +34,6 @@ export default function MessageList(props) {
 
 const containerStyle = {
   backgroundColor: "#fff",
-  width: "70%",
   padding: "20px",
 };
 
