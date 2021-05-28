@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import MessageSender from "./components/MessageSender";
+import MessageList from "./components/MessageList";
 
-function App() {
+export default function App() {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    async function fetchMessages() {
+      const response = await axios({
+        method: "get",
+        url: "/iecho/messages",
+      });
+
+      setMessages(response.data.messages);
+    }
+
+    fetchMessages();
+  }, []);
+
+  const sendMessage = async (text) => {
+    const response = await axios({
+      method: "get",
+      url: "/iecho",
+      params: {
+        text,
+      },
+    });
+
+    if (response.status === 200) setMessages([response.data].concat(messages));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ backgroundColor: "#d9d9d9" }}>
+      <MessageSender sendMessage={sendMessage} />
+      <MessageList messages={messages} />
     </div>
   );
 }
-
-export default App;
